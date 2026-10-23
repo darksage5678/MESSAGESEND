@@ -59,7 +59,7 @@ client.on('messageCreate', async (message) => {
             const promises = memberArray.map(async (member) => {
                 try {
                     await member.send(
-                        `📢 **[${serverName} 공지]**\n\n` +
+                        `## 📢 **[${serverName} 공지]**\n\n` +
                         `${textToSend}`
                     );
                     return 'success';
