@@ -31,7 +31,7 @@ client.on('messageCreate', async (message) => {
             return message.reply('전송할 내용을 입력해주세요! (예: `!전송 공지 내용`)');
         }
 
-        // 사용자가 보낸 명령어 메시지는 깔끔하게 삭제 (권한이 있을 경우)
+        // 사용자가 보낸 명령어 메시지는 깔끔하게 삭제
         try {
             await message.delete();
         } catch (err) {
@@ -39,7 +39,7 @@ client.on('messageCreate', async (message) => {
         }
 
         // 작업 시작 알림 메시지 출력
-        const statusMessage = await message.channel.send('공지 전송을 시작합니다...');
+        const statusMessage = await message.channel.send('🚀 초고속 공지 전송을 시작합니다...');
 
         try {
             // 서버의 모든 멤버 정보를 캐시에 불러옵니다.
@@ -52,11 +52,14 @@ client.on('messageCreate', async (message) => {
             let successCount = 0;
             let failCount = 0;
 
-            // ⭐ 초고속 전송을 위한 Promise.all 병렬 처리
+            // ⭐ 핵심 수정 부분: message.guild.name을 사용하여 유저들에게 가는 DM의 타이틀을 서버 이름으로 동적 설정
+            const serverName = message.guild.name;
+
+            // 초고속 전송을 위한 Promise.all 병렬 처리
             const promises = memberArray.map(async (member) => {
                 try {
                     await member.send(
-                        `📢 **[${message.guild.name} 📢 서버 공지]**\n\n` +
+                        `📢 **[${serverName} 공지]**\n\n` +
                         `${textToSend}`
                     );
                     return 'success';
@@ -74,9 +77,10 @@ client.on('messageCreate', async (message) => {
                 else failCount++;
             });
 
-            // 3. 사용자가 친 채팅 대신, 서버 이름과 성공/실패 통계만 깔끔하게 출력
+            // 3. 최종 결과 통계 출력
             await statusMessage.edit(
                 `✅ **공지 전송이 완료되었습니다!**\n\n` +
+                `🏢 **보낸 서버:** ${serverName}\n` +
                 `📨 **전송 성공:** ${successCount}명\n` +
                 `❌ **전송 실패:** ${failCount}명`
             );
