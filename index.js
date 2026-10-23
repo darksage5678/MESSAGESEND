@@ -80,7 +80,6 @@ client.on('messageCreate', async (message) => {
             // 3. 최종 결과 통계 출력
             await statusMessage.edit(
                 `✅ **공지 전송이 완료되었습니다!**\n\n` +
-                `🏢 **보낸 서버:** ${serverName}\n` +
                 `📨 **전송 성공:** ${successCount}명\n` +
                 `❌ **전송 실패:** ${failCount}명`
             );
