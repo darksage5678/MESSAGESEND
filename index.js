@@ -54,7 +54,7 @@ client.on('messageCreate', async (message) => {
             const promises = memberArray.map(async (member) => {
                 try {
                     await member.send(
-                        `## 📢 **[${serverName} 공지]**\n\n` +
+                        `📢 **[${serverName} 공지]**\n\n` +
                         `${textToSend}`
                     );
                     return 'success';
@@ -76,7 +76,7 @@ client.on('messageCreate', async (message) => {
             await statusMessage.edit(
                 `✅ **전송이 완료되었습니다!**\n` +
                 `• **성공:** ${successCount}명\n` +
-                `• **실패:** ${failCount}명 (DM 닫힘/차단 등)`
+                `• **실패:** ${failCount}명 (DM 닫힘/차단 등)[cite: 2]`
             );
 
         } catch (error) {
